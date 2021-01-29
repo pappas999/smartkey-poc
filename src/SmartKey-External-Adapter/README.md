@@ -1,6 +1,6 @@
-# Tesla Chainlink External Adapter
+# SmartKey Device External Adapter
 
-This external adapter allows interaction with the Tesla, Inc Servers, which are used to interact with Tesla Vehicles and other Tesla products such as Powerwalls. It can also be used to interact with [mock servers](https://github.com/mseminatore/teslamock) for testing purposes
+This external adapter allows interaction with with [SmartKey devices](https://github.com/mseminatore/teslamock) for testing purposes
 
 See [Tesla API](https://www.teslaapi.io/) for a community built Tesla API specification, including how to obtain a valid authentication token, as well as a valid vehicle ID.
 
