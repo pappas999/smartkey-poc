@@ -5,7 +5,7 @@ This is a Proof of Concept to demonstrate how [SmartKey](http://smartkeyplatform
 ## Requirements
 
 - NPM
-- A Chainlink node and somewhere to host the external adapter is optional. If you leave the code as it is, it will use one currently running on Google Cloud Platform.
+- A Chainlink node and somewhere to host the [SmartKey external adapter](https://github.com/pappas999/smartkey-poc/tree/main/src/SmartKey-External-Adapter) is optional. If you leave the code as it is, it will use one currently running on Google Cloud Platform.
 
 ## Installation
 
