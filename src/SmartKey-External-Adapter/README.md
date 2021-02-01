@@ -11,7 +11,7 @@ Here are the required environment variables for this external adapter:
 
 ## Environment variables
 
-| Variable      |               | Description | Example |
+| Variable      | Required            | Description | Example |
 |---------------|:-------------:|------------- |:---------:|
 | `DEVICE_KEY`     | **Required**  | The key required for the SmartKey device to authenticate the request | `0x928aaf0596f35db7f10ba5726c727f5deea70b4091` |
 
