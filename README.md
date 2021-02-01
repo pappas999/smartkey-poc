@@ -31,7 +31,7 @@ yarn install
 
 ## Deploy
 
-Deployment script is located in the [deploy](https://github.com/pappas999/smartkey-poc/tree/main/deploy) directory. If required, edit the desired constructor parameters here, because they are sent to the smart contract when it's instantiated. 
+Deployment script is located in the [deploy](https://github.com/pappas999/smartkey-poc/tree/main/deploy) directory. If required, edit the constructor parameters here, because they are sent to the smart contract when it's instantiated. 
 
 | Parameter       | Description                               | Default Value                                                   |
 | ----------------|:------------------------------------------| :---------------------------------------------------------------|
@@ -48,9 +48,9 @@ npx hardhat deploy
 
 ## Run
 
-The deployment output will give you the contract address once it's deployed. You can then use thes contract addresses in conjunction with Hardhat tasks to perform operations on the contract
+The deployment output will give you the contract address once it's deployed. You can then use the contract address in conjunction with Hardhat tasks to perform operations on the contract
 
-The SmartKeYConsumer contract has three tasks, one to request external weather data, one to see the result of checking the current wewather, and one to check to see what the status of the device is. The flow of events is:
+The SmartKeyConsumer contract has three tasks, one to request external weather data, one to see the result of checking the current weather, and one to check to see what the status of the device is. The flow of events is as follows:
 - Check windspeed at the given location
 - If the windspeed goes above the threshold, a call to modify the device state is made
 - If the windspeed goes from above to below the threshold, another call is made to modify the state of the device
