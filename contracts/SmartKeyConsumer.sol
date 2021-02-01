@@ -21,7 +21,7 @@ contract SmartKeyConsumer is ChainlinkClient, Ownable {
   address constant CHECK_WEATHER_ORACLE=0x2f90A6D021db21e1B2A077c5a37B3C7E75D15b7e;
   uint    constant CHECK_WEATHER_PAYMENT= 0.1 * 10**18; // 0.1 LINK;
 
-  bytes32 constant MODIFY_DEVICE_JOB_ID="2b8a3f5124fa4f8a86115b1137a33007";
+  bytes32 constant MODIFY_DEVICE_JOB_ID="91b64c03aae9416394c6635870f439e6";
   address constant MODIFY_DEVICE_ORACLE=0xdF1121B693f5dA9C6B63B4215a22693dd32bB698;
   uint    constant MODIFY_DEVICE_PAYMENT= 0.1 * 10**18; // 0.1 LINK;
 

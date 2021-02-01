@@ -8,9 +8,6 @@ const createRequest = async (input, callback) => {
 	const jobRunID = input.id
 	const deviceAddress = input.data.address
 	const newStatus = input.data.status
-	console.log("Got a request");
-	console.log("deviceAddress:",deviceAddress);
-	console.log("newStatus",newStatus);
 
 	//Now set values to use for request
 	const DEVICE_KEY=process.env.DEVICE_KEY;
@@ -20,19 +17,17 @@ const createRequest = async (input, callback) => {
 
 
 	//Set the headers
-	let	authString = `${DEVICE_KEY}`
+	let	authString = DEVICE_KEY
 	const headers = {
 		'accept': 'application/json',
 		'Authorization': authString
 	}
-	console.log("Auth String:",authString);
 
 	//Now do the request
-	switch (newStatus) {
-		case '0': // Opening Device
+	switch (newStatus.toString()) {
+		case "0": // Opening Device
 		try {
 			// Now that we have the data, we can unlock the vehicle
-			console.log("doing request to:",DEVICE_OPEN_URL);
 			await axios.put(DEVICE_OPEN_URL, null, { headers: headers })
 				.then(function (response) {
 					callback(response.status,
@@ -48,7 +43,7 @@ const createRequest = async (input, callback) => {
 		}
 		break;
 
-		case '1': //Closing Device
+		case "1": //Closing Device
 		try {
 			// Now that we have the data, we can unlock the vehicle
 			console.log("doing request to:",DEVICE_CLOSE_URL);
