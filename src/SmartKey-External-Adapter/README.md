@@ -13,9 +13,8 @@ Here are the required environment variables for this external adapter:
 
 | Variable      | Required            | Description | Example |
 |---------------|:-------------:|------------- |:---------:|
-| `DEVICE_KEY`     | **Required**  | The key required for the SmartKey device to authenticate the request | `0x928aaf0596f35db7f10ba5726c727f5deea70b4091` |
+| `DEVICE_KEY`     | **Required**  | The key required for the SmartKey device to authenticate the request | `0x928aaf0596f35db7f10ba5726c72736db33f51b036fed54166d4a7dbc84cfcf5c9cdf628ea3011cd47769cbcb00fe8ebf40486dae06b03bbaf3f5deea70b4090` |
 
-Take note, you must modify the BASE_URL parameter to point the adapter to actual SmartKey devices, the current code points to the [mock server](https://app.swaggerhub.com/apis/herman-sadik/v1.Chainlink/1.0.0#/devices/openDevice)
 
 See [Install Locally](#install-locally) for a quickstart
 
@@ -27,7 +26,7 @@ The structure for the JSON input is as follows. In this example jobSpec is 534ea
 { 
     "id": "534ea675a9524e8e834585b00368b178",
     "data": { 
-    	"address": "3MrA71hEHJTS51vJFZGTSevQR1XC9eV6Xup",
+    	"address": "3ECygw6y1oLswVMMMxixPsVzcdnDSykpLnX",
     	"status": 0
     }
 }
@@ -55,7 +54,7 @@ npm start
 ## Call the external adapter/API server
 
 ```bash
-curl -X POST -H "content-type:application/json" "http://localhost:8080/" --data '{ "id": 534ea675a9524e8e834585b00368b178, "data": { "address": "3MrA71hEHJTS51vJFZGTSevQR1XC9eV6Xup", "status": 0} }'
+curl -X POST -H "content-type:application/json" "http://localhost:8080/" --data '{ "id": 534ea675a9524e8e834585b00368b178, "data": { "address": "3ECygw6y1oLswVMMMxixPsVzcdnDSykpLnX", "status": 0} }'
 ```
 
 ## Serverless hosts
@@ -127,7 +126,7 @@ If using a REST API Gateway, you will need to disable the Lambda proxy integrati
   
   ## Support
 
-Got questions or feedback? [harry@genesisblockchain.com.au](mailto:harry@genesisblockchain.com.au)
+Got questions or feedback? [harry@smartcontract.com](mailto:harry@smartcontract.com)
 
 ## License
 

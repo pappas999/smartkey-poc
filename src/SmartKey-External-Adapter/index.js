@@ -3,7 +3,7 @@ const axios = require('axios')
 
 
 const createRequest = async (input, callback) => {
-
+	console.log('starting')
 	// Get input values
 	const jobRunID = input.id
 	const deviceAddress = input.data.address
@@ -11,7 +11,7 @@ const createRequest = async (input, callback) => {
 
 	//Now set values to use for request
 	const DEVICE_KEY=process.env.DEVICE_KEY;
-	const BASE_URL = `https://virtserver.swaggerhub.com/herman-sadik/v1.Chainlink/1.0.0/v1/devices/`;
+	const BASE_URL = `https://chainlink.api.smartkeyplatform.com/v1/devices/`; //`https://virtserver.swaggerhub.com/herman-sadik/v1.Chainlink/1.0.0/v1/devices/`;
 	const DEVICE_OPEN_URL = BASE_URL + `${deviceAddress}/open`
 	const DEVICE_CLOSE_URL = BASE_URL + `${deviceAddress}/close`
 
@@ -19,16 +19,18 @@ const createRequest = async (input, callback) => {
 	//Set the headers
 	let	authString = DEVICE_KEY
 	const headers = {
-		'accept': 'application/json',
-		'Authorization': authString
+		'X-API-KEY': authString
 	}
 
+
+	console.log('got a request')
 	//Now do the request
 	switch (newStatus.toString()) {
 		case "0": // Opening Device
 		try {
-			// Now that we have the data, we can unlock the vehicle
-			await axios.put(DEVICE_OPEN_URL, null, { headers: headers })
+			// Now that we have the data, we can open the device
+			console.log("doing open request to:",DEVICE_OPEN_URL);
+			await axios.post(DEVICE_OPEN_URL, null, { headers: headers })
 				.then(function (response) {
 					callback(response.status,
 						{
@@ -45,9 +47,9 @@ const createRequest = async (input, callback) => {
 
 		case "1": //Closing Device
 		try {
-			// Now that we have the data, we can unlock the vehicle
-			console.log("doing request to:",DEVICE_CLOSE_URL);
-			await axios.put(DEVICE_CLOSE_URL, null, { headers: headers })
+			// Now that we have the data, we can open the device
+			console.log("doing close request to:",DEVICE_CLOSE_URL);
+			await axios.post(DEVICE_CLOSE_URL, null, { headers: headers })
 				.then(function (response) {
 					callback(response.status,
 						{
