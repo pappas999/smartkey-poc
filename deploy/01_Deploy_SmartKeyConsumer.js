@@ -11,8 +11,8 @@ module.exports = async ({
     //LINK Token address set to Kovan address. Can get other values at https://docs.chain.link/docs/link-token-contracts
     const LINK_TOKEN_ADDR="0xa36085F69e2889c224210F603D836748e7dC0088";
     const DEVICE_ADDRESS="3ECygw6y1oLswVMMMxixPsVzcdnDSykpLnX";
-    const DEVICE_LOCATION="Adelaide";
-    const DEVICE_THRESHOLD=0;
+    const DEVICE_LOCATION="Warsaw";
+    const DEVICE_THRESHOLD=1;
 
 
     console.log("----------------------------------------------------")
