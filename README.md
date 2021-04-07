@@ -9,12 +9,13 @@ This is a Proof of Concept to demonstrate how [SmartKey](http://smartkeyplatform
 
 ## Installation
 
-Set your `KOVAN_RPC_URL` [environment variable.](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html). You can get one for free at [Infura's site.](https://infura.io/). You'll also need to set the variable `PRIVATE_KEY` which is your private key from you wallet, ie metamask. 
+Set your `KOVAN_RPC_URL` [environment variable.](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html). You can get one for free at [Infura's site.](https://infura.io/). You'll also need to set the variable `PRIVATE_KEY` which is your private key from you wallet, ie metamask. Finally, you'll also need an API key from [World Weather Online](https://www.worldweatheronline.com/) set as an environment variable. You can obtain a free trial key from their site.
 
 
 ```
-export KOVAN_RPC_URL='www.infura.io/asdfadsfafdadf'
-export PRIVATE_KEY='abcdef'
+export KOVAN_RPC_URL=www.infura.io/asdfadsfafdadf
+export PRIVATE_KEY=abcdef
+export WWO_KEY=123456
 ```
 
 Then you can install all the dependencies. This project uses the [Hardhat](http://hardhat.org) development environment
@@ -36,8 +37,8 @@ Deployment script is located in the [deploy](https://github.com/pappas999/smartk
 | Parameter       | Description                               | Default Value                                                   |
 | ----------------|:------------------------------------------| :---------------------------------------------------------------|
 | DEVICE_ADDRESS  | The address of the Smart Device           | 3MrA71hEHJTS51vJFZGTSevQR1XC9eV6Xup                             |
-| DEVICE_LOCATION | Where the Smart Device is located         | Adelaide                                                        |
-| DEVICE_THRESHOLD| Wind Kmph threshold to trigger the device |                                                                 |
+| DEVICE_LOCATION | Where the Smart Device is located         | Warsaw                                                        |
+| DEVICE_THRESHOLD| Wind Kmph threshold to trigger the device | 1                                                                |
 
 
 Once this is done, you can run the hardhat deployment plugin as follows. If no network is specified, it will default to the Kovan network.
@@ -50,10 +51,18 @@ npx hardhat deploy
 
 The deployment output will give you the contract address once it's deployed. You can then use the contract address in conjunction with Hardhat tasks to perform operations on the contract
 
-The SmartKeyConsumer contract has three tasks, one to request external weather data, one to see the result of checking the current weather, and one to check to see what the status of the device is. The flow of events is as follows:
+The SmartKeyConsumer contract has one main task, as well as supporting tasks to read contract staste. 
+- Task to request external weather data and if required, trigger the Smartkey API to modify the device state
+- Supporting task to see the currently recorded weather in the contract state
+- Supporting task to see the currently recorded device state in the contract
+- Supporting task to see the currently wind threshold set in the contract state
+- Supporting task to update the wind threshold in the contract state
+- Supporting task to fund the contract with LINK
+
+The main flow of events is as follows:
+
 - Check windspeed at the given location
-- If the windspeed goes above the threshold, a call to modify the device state is made
-- If the windspeed goes from above to below the threshold, another call is made to modify the state of the device
+- If the windspeed goes above or below the threshold, a call to modify the device state is made
 
 This contract needs to be funded with link first:
 
