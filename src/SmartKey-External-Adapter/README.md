@@ -15,6 +15,9 @@ Here are the required environment variables for this external adapter:
 |---------------|:-------------:|------------- |:---------:|
 | `DEVICE_KEY`     | **Required**  | The key required for the SmartKey device to authenticate the request | `0x928aaf0596f35db7f10ba5726c72736db33f51b036fed54166d4a7dbc84cfcf5c9cdf628ea3011cd47769cbcb00fe8ebf40486dae06b03bbaf3f5deea70b4090` |
 
+```
+export DEVICE_KEY=0x928aaf0596f35db7f10ba5726c72736db33f51b036fed54166d4a7dbc84cfcf5c9cdf628ea3011cd47769cbcb00fe8ebf40486dae06b03bbaf3f5deea70b4090
+```
 
 See [Install Locally](#install-locally) for a quickstart
 
@@ -33,7 +36,7 @@ The structure for the JSON input is as follows. In this example jobSpec is 534ea
 ```
 
 ## Live Demo	
-https://australia-southeast1-logical-etching-115600.cloudfunctions.net/smartkey-external-adapter
+https://australia-southeast1-elegant-cipher-309807.cloudfunctions.net/smartkey-external-adapter
 
 
 ## Install Locally
@@ -51,7 +54,7 @@ npm install
 npm start
 ```
 
-## Call the external adapter/API server
+## Call the external adapter/API server locally
 
 ```bash
 curl -X POST -H "content-type:application/json" "http://localhost:8080/" --data '{ "id": 534ea675a9524e8e834585b00368b178, "data": { "address": "3ECygw6y1oLswVMMMxixPsVzcdnDSykpLnX", "status": 0} }'
