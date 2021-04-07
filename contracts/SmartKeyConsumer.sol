@@ -3,6 +3,8 @@ pragma solidity ^0.6.7;
 
 import "@chainlink/contracts/src/v0.6/ChainlinkClient.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+//import "https://github.com/smartcontractkit/chainlink/blob/develop/evm-contracts/src/v0.6/ChainlinkClient.sol";
+//import "https://github.com/smartcontractkit/chainlink/blob/develop/evm-contracts/src/v0.6/vendor/Ownable.sol";
 
 
 
@@ -14,15 +16,14 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract SmartKeyConsumer is ChainlinkClient, Ownable {
   
   string constant WORLD_WEATHER_ONLINE_URL = "http://api.worldweatheronline.com/premium/v1/weather.ashx?";
-  string constant WORLD_WEATHER_ONLINE_KEY = "ebf30c7c7adc4a0381e123705212701";
   string constant WORLD_WEATHER_ONLINE_PATH = "data.current_condition.0.windspeedKmph";
 
-  bytes32 constant CHECK_WEATHER_JOB_ID="29fa9aa13bf1468788b7cc4a500a45b8";
-  address constant CHECK_WEATHER_ORACLE=0x2f90A6D021db21e1B2A077c5a37B3C7E75D15b7e;
+  bytes32 constant CHECK_WEATHER_JOB_ID="4f84d171027f400bab24578ae6dfc5c4";
+  address constant CHECK_WEATHER_ORACLE=0x24f1c861582F03DaceF9Edb616FA43868F00470D;
   uint    constant CHECK_WEATHER_PAYMENT= 0.1 * 10**18; // 0.1 LINK;
 
-  bytes32 constant MODIFY_DEVICE_JOB_ID="91b64c03aae9416394c6635870f439e6";
-  address constant MODIFY_DEVICE_ORACLE=0xdF1121B693f5dA9C6B63B4215a22693dd32bB698;
+  bytes32 constant MODIFY_DEVICE_JOB_ID="aad98afcc3d342b78e7e60f550a90427";
+  address constant MODIFY_DEVICE_ORACLE=0x24f1c861582F03DaceF9Edb616FA43868F00470D;
   uint    constant MODIFY_DEVICE_PAYMENT= 0.1 * 10**18; // 0.1 LINK;
 
   string location;
@@ -54,12 +55,12 @@ contract SmartKeyConsumer is ChainlinkClient, Ownable {
   /**
    * @notice Creates a request to check windspeed at the given location
    */
-  function checkWeather()
+  function checkWeather(string memory _apiKey)
     public
     onlyOwner
     returns (bytes32 requestId)
   {
-    string memory url = string(abi.encodePacked(WORLD_WEATHER_ONLINE_URL, "key=",WORLD_WEATHER_ONLINE_KEY,"&q=",location,"&format=json&num_of_days=1"));
+    string memory url = string(abi.encodePacked(WORLD_WEATHER_ONLINE_URL, "key=",_apiKey,"&q=",location,"&format=json&num_of_days=1"));
     Chainlink.Request memory req = buildChainlinkRequest(CHECK_WEATHER_JOB_ID, address(this), this.fulfillWeather.selector);
     req.add("url", url);
     req.add("path", WORLD_WEATHER_ONLINE_PATH);
@@ -93,13 +94,13 @@ contract SmartKeyConsumer is ChainlinkClient, Ownable {
    * @notice Creates a request to modify the state of the device
    */
   function modifyDevice(string memory _deviceAddress, DeviceStatus _newStatus) 
-    private returns (bytes32 requestId) {
+    public returns (bytes32 modifyRequestId) {
     
     //build up a request to send to the required Chainlink node
-    Chainlink.Request memory req = buildChainlinkRequest(MODIFY_DEVICE_JOB_ID, address(this), this.fulfillModifyDevice.selector);
-    req.add("address", _deviceAddress);
-    req.addInt("status", int(_newStatus));
-    requestId = sendChainlinkRequestTo(MODIFY_DEVICE_ORACLE, req, MODIFY_DEVICE_PAYMENT);
+    Chainlink.Request memory request = buildChainlinkRequest(MODIFY_DEVICE_JOB_ID, address(this), this.fulfillModifyDevice.selector);
+    request.add("deviceAddress", _deviceAddress);
+    request.addInt("status", int(_newStatus));
+    modifyRequestId = sendChainlinkRequestTo(MODIFY_DEVICE_ORACLE, request, MODIFY_DEVICE_PAYMENT);
   }
 
   /**
@@ -134,7 +135,23 @@ contract SmartKeyConsumer is ChainlinkClient, Ownable {
       return "Closed";
     }
   }
+
+  /**
+   * @notice Sets the wind threshold
+   * @dev Returns 'Open' or 'Closed' depending on device status
+   */
+  function setWindThreshold(uint _newThreshold) external  {
+    windThreshold = _newThreshold;
+  }
   
+  
+  /**
+   * @notice Returns the wind threshold
+   * @dev Returns the wind threshold in kmph
+   */
+  function getWindThreshold() public view returns (uint) {
+    return windThreshold;
+  } 
 
  /**
    * @notice Returns the address of the LINK token

@@ -5,9 +5,11 @@ const axios = require('axios')
 const createRequest = async (input, callback) => {
 	console.log('starting')
 	// Get input values
-	const jobRunID = input.id
-	const deviceAddress = input.data.address
+	var jobRunID = input.id
+	var deviceAddress = input.data.deviceAddress
 	const newStatus = input.data.status
+	console.log('jobId:',jobRunID)
+	console.log('deviceAddress:',deviceAddress)
 
 	//Now set values to use for request
 	const DEVICE_KEY=process.env.DEVICE_KEY;
@@ -23,7 +25,7 @@ const createRequest = async (input, callback) => {
 	}
 
 
-	console.log('got a request')
+	console.log('got a request to modify smart device state')
 	//Now do the request
 	switch (newStatus.toString()) {
 		case "0": // Opening Device
